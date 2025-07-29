@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Animasi Jangan Sedih Devina - Kompleks & Modern</title>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #fcb0b3 0%, #81d4fa 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    #container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    #message {
+      font-size: 2.8em;
+      font-weight: bold;
+      color: #ff3e6c;
+      opacity: 0;
+      transition: opacity 1s cubic-bezier(.68,-0.55,.27,1.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #message.show {
+      opacity: 1;
+    }
+    #emoji {
+      font-size: 2.2em;
+      margin-left: 0.4em;
+      display: inline-block;
+      animation: bounce-rotate 1.5s ease 1, pulse 1.5s infinite alternate;
+      filter: drop-shadow(0 2px 5px #ffb6c1);
+    }
+    @keyframes bounce-rotate {
+      0% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-26px) rotate(15deg);}
+      60% { transform: translateY(-8px) rotate(-14deg);}
+      100% { transform: translateY(0) rotate(0deg);}
+    }
+    @keyframes pulse {
+      to { transform: scale(1.16) }
+      from { transform: scale(1); }
+    }
+    #additional-text {
+      margin-top: 24px;
+      font-size: 1.3em;
+      color: #33691e;
+      opacity: 0;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: opacity 1s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    #additional-text.show {
+      opacity: 1;
+    }
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -30px;
+      font-size: 1.2em;
+      opacity: 0.7;
+      animation: floatUp 4.5s linear forwards;
+      z-index: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 6px #fbb0b0);
+      user-select: none;
+    }
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh) scale(1.3) rotate(20deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="message">
+      Jangan Sedih, Devina! 
+      <span id="emoji">❤️</span>
+    </div>
+    <div id="additional-text">Anak Asep gabole sedih, tar gabisa melekkkk</div>
+  </div>
+  <audio id="sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+  <script>
+    const message = document.getElementById('message');
+    const emoji = document.getElementById('emoji');
+    const additionalText = document.getElementById('additional-text');
+    const sound = document.getElementById('sound');
+    function showMessage() {
+      message.classList.add('show');
+      additionalText.classList.add('show');
+      emoji.style.animation = 'none';
+      void emoji.offsetHeight;
+      emoji.style.animation = null;
+      sound.play();
+      setTimeout(() => {
+        message.classList.remove('show');
+        additionalText.classList.remove('show');
+      }, 3000);
+    }
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('span');
+      heart.textContent = ['💖','💗','❤️','💞','💓'][Math.floor(Math.random()*5)];
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 90 + 5 + 'vw';
+      heart.style.fontSize = (Math.random() * 0.7 + 1.3) + 'em';
+      heart.style.animationDuration = (Math.random()*2+3.5) + 's';
+      document.body.appendChild(heart);
+      setTimeout(()=> heart.remove(),4500);
+    }
+    setInterval(createHeart, 400);
+    // Message animation loop
+    showMessage();
+    setInterval(showMessage, 5000);
+  </script>
+</body>
+</html>
